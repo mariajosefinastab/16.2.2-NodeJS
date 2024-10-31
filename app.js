@@ -38,12 +38,26 @@ app.put("/people/:index", (req, res) => {
   /* COMPLETA EL CÓDIGO NECESARIO:
      Para que se pueda actualizar el objeto asociado al índice indicado en la URL 
    */
+  const index = req.params.index; 
+  if(index >= 0 && index < people.length) { //Verifico si el índice está dentro del límite del array
+    people[index] = req.body; //Si se verifica que si, actualiza objeto con req.body
+    res.json(people[index]); //Te devuelvo el objeto actualizado
+  } else {
+    res.status(404).json({message : "No existe persona"});
+  }
 });
 
 app.delete("/people/:index", (req, res) => {
   /* COMPLETA EL CÓDIGO NECESARIO:
      Para que se pueda eliminar el objeto asociado al índice indicado en la URL 
    */
+  const index = req.params.index; //idem put
+  if (index >= 0 && index < people.length){ //idem put
+    const deletedPerson = people.splice(index, 1); //con splice elimino el objeto del array
+    res.json(deletedPerson); //Te devuelvo lo que eliminé
+  }else{
+    res.status(404).json({message : "No existe persona"});
+  }
 });
 
 // Esta línea inicia el servidor para que escuche peticiones en el puerto indicado
